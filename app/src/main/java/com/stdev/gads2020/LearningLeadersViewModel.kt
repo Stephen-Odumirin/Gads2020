@@ -32,7 +32,7 @@ class LearningLeadersViewModel() : ViewModel() {
 
             try {
                 val listResult = getLeaderboardDeferred.await()
-                _status.value = "Success : ${listResult.size} Leaders Retrieved"
+                //_status.value = "Success : ${listResult.size} Leaders Retrieved"
                 if (listResult.isNotEmpty()){
                     _leaderboard.value = listResult
                 }

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -11,6 +13,8 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import cn.pedant.SweetAlert.SweetAlertDialog
+import com.thecode.aestheticdialogs.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +26,8 @@ class SubmitActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.submit_toolbar)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
 
         val actionBar : ActionBar? = supportActionBar
         actionBar?.setDisplayShowCustomEnabled(true)
@@ -39,59 +45,58 @@ class SubmitActivity : AppCompatActivity() {
         buttonSubmit.setOnClickListener {
             if (firstName.text.isNotEmpty() || lastName.text.isNotEmpty() || emailAddress.text.isNotEmpty() || githubProjectLink.text.isNotEmpty()) {
 
-                val alertDialog = AlertDialog.Builder(this)
-                alertDialog.setMessage("Are you sure?")
-                alertDialog.setCancelable(true)
-                alertDialog.setPositiveButton(
-                    "Yes",
-                    DialogInterface.OnClickListener { dialog: DialogInterface?, which: Int ->
-                        val name = firstName.text.toString()
-                        val lastname = lastName.text.toString()
-                        val emailaddress = emailAddress.text.toString()
-                        val githublink = githubProjectLink.text.toString()
-                        val submitService = GadsApi.retrofitSubmitService
-                        val detailsCall =
-                            submitService.submitProject(emailaddress, name, lastname, githublink)
-                        detailsCall?.enqueue(object : Callback<Void?> {
-                            override fun onFailure(call: Call<Void?>, t: Throwable) {
-                                showToast("Error : ${t.message.toString()}")
-                                val alertDialog1 = AlertDialog.Builder(this@SubmitActivity)
-                                alertDialog1.setTitle(" ")
-                                alertDialog1.setIcon(R.drawable.faliure_image)
-                                alertDialog1.setMessage("Submission not Successful")
-                                alertDialog1.create()
-                                alertDialog1.show()
-                            }
+                val sweetAlertDialog = SweetAlertDialog(this@SubmitActivity, SweetAlertDialog.WARNING_TYPE)
+                sweetAlertDialog.titleText = "Are you sure ?"
+                sweetAlertDialog.confirmText = "Yes"
+                sweetAlertDialog.setConfirmClickListener {
+                    it.cancel()
+                    val name = firstName.text.toString()
+                    val lastname = lastName.text.toString()
+                    val emailaddress = emailAddress.text.toString()
+                    val githublink = githubProjectLink.text.toString()
+                    val submitService = GadsApi.retrofitSubmitService
+                    val detailsCall = submitService.submitProject(emailaddress, name, lastname, githublink)
+                    detailsCall?.enqueue(object : Callback<Void?> {
+                        override fun onFailure(call: Call<Void?>, t: Throwable) {
 
-                            override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
-                                if (response.isSuccessful) {
-                                    val alertDialog2 = AlertDialog.Builder(this@SubmitActivity)
-                                    alertDialog2.setTitle(" ").setCancelable(true)
-                                    alertDialog2.setIcon(R.drawable.success_image)
-                                    alertDialog2.setMessage("Submission Successful ")
-                                    alertDialog2.create()
-                                    alertDialog2.show()
-                                    showToast("Successful ! Hurray")
-                                } else {
-                                    val alertDialog3 = AlertDialog.Builder(this@SubmitActivity)
-                                    alertDialog3.setTitle(" ").setCancelable(true)
-                                    alertDialog3.setIcon(R.drawable.faliure_image)
-                                    alertDialog3.setMessage("Submission not Successful")
-                                    alertDialog3.create()
-                                    alertDialog3.show()
-                                    showToast("Opps Error, Try again")
-                                }
-                            }
+                            val sweetAlertDialog1 = SweetAlertDialog(this@SubmitActivity,SweetAlertDialog.ERROR_TYPE)
+                            sweetAlertDialog1.titleText = "Oops..."
+                            sweetAlertDialog1.contentText = "Submission not Successful : ${t.message.toString()}"
+                            sweetAlertDialog1.show()
+                        }
 
-                        })
+                        override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
+                            if (response.isSuccessful) {
+                                Log.i("SubmitActivity", "onResponse: $response : $call")
+                                val sweetAlertDialog2 = SweetAlertDialog(
+                                    this@SubmitActivity,
+                                    SweetAlertDialog.SUCCESS_TYPE
+                                )
+                                sweetAlertDialog2.titleText = "Good Job !"
+                                sweetAlertDialog2.contentText = "Submission Successful"
+                                sweetAlertDialog2.show()
+
+                            } else {
+                                val sweetAlertDialog3 = SweetAlertDialog(
+                                    this@SubmitActivity,
+                                    SweetAlertDialog.ERROR_TYPE
+                                )
+                                sweetAlertDialog3.titleText = "Oops...."
+                                sweetAlertDialog3.contentText =
+                                    "Submission not Successful, Try again "
+                                sweetAlertDialog3.show()
+                            }
+                        }
+
                     })
-                alertDialog.create()
-                alertDialog.show()
-
-
+                }
+                sweetAlertDialog.show()
             }
+
             else{
-                Toast.makeText(this,"Input All Fields", Toast.LENGTH_SHORT).show()
+                val sweetAlert = SweetAlertDialog(this@SubmitActivity)
+                sweetAlert.titleText = "Input All Fields ! "
+                sweetAlert.show()
             }
         }
 

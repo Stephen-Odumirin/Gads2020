@@ -31,7 +31,7 @@ class SkillLeadersViewModel : ViewModel() {
 
             try {
                 var listResult = getSkillDeferred.await()
-                _skillResponse.value = "Success : ${listResult.size} Skill Leaders Retrieved"
+                //_skillResponse.value = "Success : ${listResult.size} Skill Leaders Retrieved"
 
                 if (listResult.isNotEmpty()){
                     _skillLeaderboard.value = listResult
