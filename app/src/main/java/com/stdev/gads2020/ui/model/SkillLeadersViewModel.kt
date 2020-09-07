@@ -1,8 +1,10 @@
-package com.stdev.gads2020
+package com.stdev.gads2020.ui.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.stdev.gads2020.GadsApi
+import com.stdev.gads2020.SkillIQ
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

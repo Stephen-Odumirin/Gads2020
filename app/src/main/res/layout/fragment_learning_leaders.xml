@@ -4,12 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LearningLeadersFragment">
+    tools:context=".ui.LearningLeadersFragment">
 
     <data>
         <variable
             name="learningLeadersViewModel"
-            type="com.stdev.gads2020.LearningLeadersViewModel" />
+            type="com.stdev.gads2020.ui.model.LearningLeadersViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

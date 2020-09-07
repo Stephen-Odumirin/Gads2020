@@ -1,4 +1,4 @@
-package com.stdev.gads2020
+package com.stdev.gads2020.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.stdev.gads2020.LearningLeadersAdapter
+import com.stdev.gads2020.ui.model.LearningLeadersViewModel
 import com.stdev.gads2020.databinding.FragmentLearningLeadersBinding
 
 

@@ -1,13 +1,14 @@
-package com.stdev.gads2020
+package com.stdev.gads2020.ui
 
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.stdev.gads2020.R
 
 private val TAB_TITLES = arrayOf(
-        R.string.tab_text_1,
-        R.string.tab_text_2
+    R.string.tab_text_1,
+    R.string.tab_text_2
 )
 
 /**
@@ -22,19 +23,15 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager?)
             0 -> {
                 LearningLeadersFragment()
             }
-            1 -> {
+            else -> {
                 SkillLeadersFragment()
             }
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         //return PlaceholderFragment.newInstance(position + 1)
-            else -> LearningLeadersFragment()
+           // else -> LearningLeadersFragment()
         }
     }
-    /*
-
-        }
-     */
 
     override fun getPageTitle(position: Int): CharSequence? {
         return context.resources.getString(TAB_TITLES[position])

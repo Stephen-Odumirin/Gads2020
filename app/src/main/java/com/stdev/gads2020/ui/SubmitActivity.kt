@@ -1,20 +1,18 @@
-package com.stdev.gads2020
+package com.stdev.gads2020.ui
 
 import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.thecode.aestheticdialogs.*
+import com.stdev.gads2020.GadsApi
+import com.stdev.gads2020.R
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,7 +52,8 @@ class SubmitActivity : AppCompatActivity() {
                     val lastname = lastName.text.toString()
                     val emailaddress = emailAddress.text.toString()
                     val githublink = githubProjectLink.text.toString()
-                    val submitService = GadsApi.retrofitSubmitService
+                    val submitService =
+                        GadsApi.retrofitSubmitService
                     val detailsCall = submitService.submitProject(emailaddress, name, lastname, githublink)
                     detailsCall?.enqueue(object : Callback<Void?> {
                         override fun onFailure(call: Call<Void?>, t: Throwable) {

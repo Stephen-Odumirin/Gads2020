@@ -1,4 +1,4 @@
-package com.stdev.gads2020
+package com.stdev.gads2020.ui
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
+import com.stdev.gads2020.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +35,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         val sectionsPagerAdapter =
-            SectionsPagerAdapter(this, supportFragmentManager)
+            SectionsPagerAdapter(
+                this,
+                supportFragmentManager
+            )
 
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
@@ -46,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun submit() {
         Toast.makeText(this,"About to Submit!",Toast.LENGTH_SHORT).show()
-        val intent = Intent(this,SubmitActivity::class.java)
+        val intent = Intent(this, SubmitActivity::class.java)
         startActivity(intent)
     }
 }

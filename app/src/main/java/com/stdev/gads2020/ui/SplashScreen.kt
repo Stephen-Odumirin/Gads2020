@@ -1,11 +1,11 @@
-package com.stdev.gads2020
+package com.stdev.gads2020.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.Window
-import android.view.WindowManager
+import com.stdev.gads2020.R
 
 class SplashScreen : AppCompatActivity() {
 
@@ -20,7 +20,8 @@ class SplashScreen : AppCompatActivity() {
         //3 second splash time
         Handler().postDelayed({
             //start main activity
-            startActivity(Intent(this@SplashScreen,MainActivity::class.java))
+            startActivity(Intent(this@SplashScreen,
+                MainActivity::class.java))
             finish()
         },3000)
     }

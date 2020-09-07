@@ -4,12 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".SkillLeadersFragment">
+    tools:context=".ui.SkillLeadersFragment">
 
     <data>
         <variable
             name="skillViewModel"
-            type="com.stdev.gads2020.SkillLeadersViewModel" />
+            type="com.stdev.gads2020.ui.model.SkillLeadersViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

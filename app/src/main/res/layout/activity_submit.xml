@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".SubmitActivity">
+    tools:context=".ui.SubmitActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/submit_toolbar"

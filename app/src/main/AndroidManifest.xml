@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/new_ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubmitActivity"
+        <activity android:name=".ui.SubmitActivity"
             />
         <activity
-            android:name=".SplashScreen"
+            android:name=".ui.SplashScreen"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="LEADERBOAD"
             />
     </application>
