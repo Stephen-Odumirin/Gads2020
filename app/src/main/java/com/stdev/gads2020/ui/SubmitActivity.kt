@@ -1,16 +1,15 @@
 package com.stdev.gads2020.ui
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
-import cn.pedant.SweetAlert.SweetAlertDialog
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.stdev.gads2020.GadsApi
 import com.stdev.gads2020.R
 import retrofit2.Call
@@ -24,14 +23,15 @@ class SubmitActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.submit_toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
 
 
-        val actionBar : ActionBar? = supportActionBar
-        actionBar?.setDisplayShowCustomEnabled(true)
-        val inflater : LayoutInflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val actionBarView = inflater.inflate(R.layout.custom_submit_toolbar,null)
-        actionBar?.customView = actionBarView
+//        val actionBar : ActionBar? = supportActionBar
+//        actionBar?.setDisplayShowCustomEnabled(true)
+//        val inflater : LayoutInflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//        val actionBarView = inflater.inflate(R.layout.custom_submit_toolbar,null)
+//        actionBar?.customView = actionBarView
 
         val firstName = findViewById<EditText>(R.id.submit_first_name)
         val lastName = findViewById<EditText>(R.id.submit_last_name)
@@ -43,11 +43,17 @@ class SubmitActivity : AppCompatActivity() {
         buttonSubmit.setOnClickListener {
             if (firstName.text.isNotEmpty() || lastName.text.isNotEmpty() || emailAddress.text.isNotEmpty() || githubProjectLink.text.isNotEmpty()) {
 
+//                val dialogButton = findViewById<MaterialButton>(R.id.button_new_submit);
+//                val dialog = MaterialAlertDialogBuilder(this)
+//                    .setView(R.layout.confirmation_dialog)
+//                    .setCancelable(true)
+//                    .show()
+                dialogButton.setOnClickListener {
                 val sweetAlertDialog = SweetAlertDialog(this@SubmitActivity, SweetAlertDialog.WARNING_TYPE)
                 sweetAlertDialog.titleText = "Are you sure ?"
                 sweetAlertDialog.confirmText = "Yes"
                 sweetAlertDialog.setConfirmClickListener {
-                    it.cancel()
+                    dialog.dismiss()
                     val name = firstName.text.toString()
                     val lastname = lastName.text.toString()
                     val emailaddress = emailAddress.text.toString()
@@ -57,11 +63,14 @@ class SubmitActivity : AppCompatActivity() {
                     val detailsCall = submitService.submitProject(emailaddress, name, lastname, githublink)
                     detailsCall?.enqueue(object : Callback<Void?> {
                         override fun onFailure(call: Call<Void?>, t: Throwable) {
-
                             val sweetAlertDialog1 = SweetAlertDialog(this@SubmitActivity,SweetAlertDialog.ERROR_TYPE)
                             sweetAlertDialog1.titleText = "Oops..."
                             sweetAlertDialog1.contentText = "Submission not Successful : ${t.message.toString()}"
                             sweetAlertDialog1.show()
+//                            val dialog = MaterialAlertDialogBuilder(this@SubmitActivity)
+//                                .setView(R.layout.failure_dialog)
+//                                .setCancelable(true)
+//                                dialog.show()
                         }
 
                         override fun onResponse(call: Call<Void?>, response: Response<Void?>) {
@@ -74,6 +83,10 @@ class SubmitActivity : AppCompatActivity() {
                                 sweetAlertDialog2.titleText = "Good Job !"
                                 sweetAlertDialog2.contentText = "Submission Successful"
                                 sweetAlertDialog2.show()
+//                                val dialog = MaterialAlertDialogBuilder(this@SubmitActivity)
+//                                    .setView(R.layout.success_dialog)
+//                                    .setCancelable(true)
+//                                dialog.show()
 
                             } else {
                                 val sweetAlertDialog3 = SweetAlertDialog(
@@ -84,22 +97,31 @@ class SubmitActivity : AppCompatActivity() {
                                 sweetAlertDialog3.contentText =
                                     "Submission not Successful, Try again "
                                 sweetAlertDialog3.show()
+
+//                                val dialog = MaterialAlertDialogBuilder(this@SubmitActivity)
+//                                    .setView(R.layout.failure_dialog)
+//                                    .setCancelable(true)
+//                                dialog.show()
                             }
                         }
 
                     })
                 }
-                sweetAlertDialog.show()
             }
 
             else{
-                val sweetAlert = SweetAlertDialog(this@SubmitActivity)
-                sweetAlert.titleText = "Input All Fields ! "
-                sweetAlert.show()
+                val dialog = MaterialAlertDialogBuilder(this@SubmitActivity)
+                    .setView(R.layout.failure_dialog)
+                    .setCancelable(true)
+                dialog.show()
             }
         }
-
     }
+
+    private fun showDialog(view: View){
+        MaterialAlertDialogBuilder(this).setView(view).setCancelable(true).show()
+    }
+
 
     fun showToast(message:String){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show()

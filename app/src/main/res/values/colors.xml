@@ -5,6 +5,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorAccent">#ff9800</color>
     <color name="orange">#FF9800</color>
+    <color name="soft_yellow">#FB9D26</color>
+    <color name="yellow">#EA8502</color>
 
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
